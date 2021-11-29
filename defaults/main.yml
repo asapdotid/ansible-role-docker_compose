@@ -1,0 +1,10 @@
+---
+# Install form source api
+docker_compose_source_api: "https://api.github.com/repos/docker/compose/releases/latest"
+
+# Docker compose binary location
+docker_compose_bin: "/usr/local/bin/docker-compose"
+
+# The version of docker-compose to install when not using a package.
+# For available versions, see: https://github.com/docker/compose/releases
+docker_compose_version: "latest"

@@ -1,0 +1,30 @@
+---
+galaxy_info:
+  author: Asapdotid
+  namespace: asapdotid
+  role_name: docker_compose
+  description: Install and configure Docker Compose on your system.
+  license: MIT / BSD
+  company: none
+  min_ansible_version: "2.10"
+
+  platforms:
+    - name: Debian
+      versions:
+        - bullseye
+    - name: EL
+      versions:
+        - 8
+    - name: Fedora
+      versions:
+        - 33
+        - 34
+    - name: Ubuntu
+      versions:
+        - all
+
+  galaxy_tags:
+    - dockerce
+    - docker
+
+dependencies: []

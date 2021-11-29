@@ -1,0 +1,13 @@
+---
+- name: DOCKER-COMPOSE | Check latest docker version
+  set_fact:
+    docker_compose_latest_version: "{{ (lookup('url', docker_compose_source_api) | from_json).get('tag_name') }}"
+  when: docker_compose_version == 'latest'
+  changed_when: false
+
+- name: "DOCKER-COMPOSE | Install docker-compose version {{ docker_compose_latest_version | default(docker_compose_version) }}"
+  ansible.builtin.get_url:
+    url: "https://github.com/docker/compose/releases/download/{{ docker_compose_latest_version | default(docker_compose_version) }}/docker-compose-{{ ansible_system }}-{{ ansible_architecture }}"
+    dest: /usr/local/bin/docker-compose
+    force: true
+    mode: a+x
