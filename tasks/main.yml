@@ -5,9 +5,23 @@
   when: docker_compose_version == 'latest'
   changed_when: false
 
+- name: "Check that you can connect (GET) version {{ docker_compose_latest_version | default(docker_compose_version) }}"
+  ansible.builtin.uri:
+    url: "https://github.com/docker/compose/releases/download/{{ docker_compose_latest_version | default(docker_compose_version) }}/docker-compose-{{ ansible_system|lower }}-{{ ansible_architecture }}"
+  register: valid_url_result
+
+- name: DOCKER-COMPOSE | Set fact filename
+  ansible.builtin.set_fact:
+    dcc_filename: "{{ valid_url_result.content_disposition.split('filename=')[1].split(';')[0] }}"
+  when:
+    - valid_url_result.status == 200
+
 - name: "DOCKER-COMPOSE | Install docker-compose version {{ docker_compose_latest_version | default(docker_compose_version) }}"
   ansible.builtin.get_url:
-    url: "https://github.com/docker/compose/releases/download/{{ docker_compose_latest_version | default(docker_compose_version) }}/docker-compose-{{ ansible_system }}-{{ ansible_architecture }}"
+    # url: "https://github.com/docker/compose/releases/download/{{ docker_compose_latest_version | default(docker_compose_version) }}/docker-compose-{{ ansible_system }}-{{ ansible_architecture }}"
+    url: "https://github.com/docker/compose/releases/download/{{ docker_compose_latest_version | default(docker_compose_version) }}/{{ dcc_filename }}"
     dest: /usr/local/bin/docker-compose
     force: true
     mode: a+x
+  when:
+    - valid_url_result.status == 200
