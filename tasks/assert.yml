@@ -4,4 +4,4 @@
     that:
       - docker_compose_version is defined
       - docker_compose_version is string
-    quite: yes
+    quiet: yes
