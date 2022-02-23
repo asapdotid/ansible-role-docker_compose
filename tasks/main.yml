@@ -1,4 +1,9 @@
 ---
+- name: DOCKER-COMPOSE | import assert.yml
+  ansible.builtin.import_tasks: assert.yml
+  run_once: yes
+  delegate_to: localhost
+
 - name: DOCKER-COMPOSE | Check latest docker version
   set_fact:
     docker_compose_latest_version: "{{ (lookup('url', docker_compose_source_api) | from_json).get('tag_name') }}"
