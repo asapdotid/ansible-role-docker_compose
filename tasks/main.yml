@@ -10,7 +10,7 @@
   when: docker_compose_version == 'latest'
   changed_when: false
 
-- name: "Check that you can connect (GET) version {{ docker_compose_latest_version | default(docker_compose_version) }}"
+- name: "DOCKER-COMPOSE | Check that you can connect (GET) version {{ docker_compose_latest_version | default(docker_compose_version) }}"
   ansible.builtin.uri:
     url: "https://github.com/docker/compose/releases/download/{{ docker_compose_latest_version | default(docker_compose_version) }}/docker-compose-{{ ansible_system|lower }}-{{ ansible_architecture }}"
   register: valid_url_result
